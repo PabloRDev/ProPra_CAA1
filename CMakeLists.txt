@@ -1,10 +1,3 @@
-#cmake_minimum_required(VERSION 3.29)
-#project(20242_P1 C)
-#
-#set(CMAKE_C_STANDARD 11)
-#
-#add_executable(20242_P1 main.c)
-
 cmake_minimum_required(VERSION 3.29)
 project(20242_P1 C)
 
