@@ -125,7 +125,7 @@ void person_parse(tPerson *data, tCSVEntry entry) {
     // Ex. 2a
 }
 
-// Add a new person to people data
+// 2b - Add a new person to people data
 void people_add(tPeople *people_data, tPerson person) {
     assert(people_data != NULL); // Check input data not NULL
     const int person_index = people_find(*people_data, person.document);
@@ -146,9 +146,15 @@ void subscription_parse(tSubscription *data, tCSVEntry entry) {
     // Ex. 2c
 }
 
-// Copy the data from the source to destination (individual data)
+// 2d - Copy the data from the source to destination (individual data)
 void subscription_cpy(tSubscription *destination, tSubscription source) {
-    // Ex. 2d
+    destination->id = source.id;
+    strncpy(destination->document, source.document, MAX_DOCUMENT + 1);
+    destination->plan = source.plan;
+    destination->price = source.price;
+    date_cpy(&destination->startDate, source.startDate);
+    date_cpy(&(destination->endDate), source.endDate);
+    destination->numDevices = source.numDevices;
 }
 
 // Get subscription data using a string
