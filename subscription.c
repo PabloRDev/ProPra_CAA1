@@ -163,8 +163,11 @@ void subscription_get(tSubscription data, char *buffer) {
 }
 
 // Initialize subscriptions data
-void subscriptions_init(tSubscriptions *data) {
-    // Ex. 2f
+void subscriptions_init(tSubscriptions *subscriptions_data) {
+    // Check input/output data
+    assert(subscriptions_data != NULL);
+
+    subscriptions_data->count = 0;
 }
 
 // Add a new subscription

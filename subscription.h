@@ -104,7 +104,7 @@ void subscription_cpy(tSubscription *destination, tSubscription source);
 void subscription_get(tSubscription data, char *buffer);
 
 // Initialize subscriptions data
-void subscriptions_init(tSubscriptions *data);
+void subscriptions_init(tSubscriptions *subscriptions_data);
 
 // Add a new subscription
 void subscriptions_add(tSubscriptions *data, tPeople people, tSubscription subscription);
