@@ -126,7 +126,7 @@ void person_parse(tPerson *data, tCSVEntry entry) {
 }
 
 // 2b - Add a new person to people data
-void people_add(tPeople *people_data, tPerson person) {
+void people_add(tPeople *people_data, const tPerson person) {
     assert(people_data != NULL); // Check input data not NULL
     const int person_index = people_find(*people_data, person.document);
     if (person_index >= 0) {
@@ -171,7 +171,7 @@ void subscriptions_init(tSubscriptions *subscriptions_data) {
 }
 
 // 2g - Add a new subscription
-void subscriptions_add(tSubscriptions *subscriptions_data, tPeople people, tSubscription subscription) {
+void subscriptions_add(tSubscriptions *subscriptions_data, const tPeople people, const tSubscription subscription) {
     assert(subscriptions_data != NULL); // Check input data not NULL
 
     const char *subscriber_id = subscription.document;
@@ -200,7 +200,7 @@ void subscriptions_get(tSubscriptions data, int index, char *buffer) {
 }
 
 // 2i - Returns the position of a subscription looking for id's subscription. -1 if it does not exist
-int subscriptions_find(const tSubscriptions subscriptions_data, int id) {
+int subscriptions_find(const tSubscriptions subscriptions_data, const int id) {
     int i = 0;
     while (i < subscriptions_data.count) {
         if (subscriptions_data.elems[i].id == id) {
