@@ -18,7 +18,7 @@ void date_parse(tDate *date, const char *s_date) {
     assert(strlen(s_date) == 10);
 
     // Parse the input date
-    sscanf(s_date, "%d/%d/%d", &(date->day), &(date->month), &(date->year));
+    scanf(s_date, "%d/%d/%d", &(date->day), &(date->month), &(date->year));
 }
 
 // Copy the data from the source to destination
@@ -174,9 +174,9 @@ void subscriptions_init(tSubscriptions *subscriptions_data) {
 void subscriptions_add(tSubscriptions *subscriptions_data, tPeople people, tSubscription subscription) {
     assert(subscriptions_data != NULL); // Check input data not NULL
 
-    const char *subscriber_document = subscription.document;
-    assert(subscriber_document != NULL); // Check subscriber not NULL
-    if (people_find(people, subscriber_document) < 0) {
+    const char *subscriber_id = subscription.document;
+    assert(subscriber_id != NULL); // Check subscriber not NULL
+    if (people_find(people, subscriber_id) < 0) {
         // Check subscriber is in people table
         return;
     }
@@ -199,9 +199,15 @@ void subscriptions_get(tSubscriptions data, int index, char *buffer) {
     // Ex. 2h
 }
 
-// Returns the position of a subscription looking for id's subscription. -1 if it does not exist
-int subscriptions_find(tSubscriptions data, int id) {
-    // Ex. 2i
-    if (id > 0) return 1;
+// 2i - Returns the position of a subscription looking for id's subscription. -1 if it does not exist
+int subscriptions_find(const tSubscriptions subscriptions_data, int id) {
+    int i = 0;
+    while (i < subscriptions_data.count) {
+        if (subscriptions_data.elems[i].id == id) {
+            return i;
+        }
+        i++;
+    }
+
     return -1;
 }

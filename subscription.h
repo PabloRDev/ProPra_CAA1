@@ -113,7 +113,7 @@ void subscriptions_add(tSubscriptions *subscriptions_data, tPeople people, tSubs
 void subscriptions_get(tSubscriptions data, int index, char *buffer);
 
 // Returns the position of a subscription looking for id's subscription. -1 if it does not exist
-int subscriptions_find(tSubscriptions data, int id);
+int subscriptions_find(tSubscriptions subscriptions_data, int id);
 
 ////////////////////////////////////////////
 
