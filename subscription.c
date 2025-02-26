@@ -162,7 +162,7 @@ void subscription_get(tSubscription data, char *buffer) {
     // Ex. 2e
 }
 
-// Initialize subscriptions data
+// 2f - Initialize subscriptions data
 void subscriptions_init(tSubscriptions *subscriptions_data) {
     // Check input/output data
     assert(subscriptions_data != NULL);
@@ -170,9 +170,28 @@ void subscriptions_init(tSubscriptions *subscriptions_data) {
     subscriptions_data->count = 0;
 }
 
-// Add a new subscription
-void subscriptions_add(tSubscriptions *data, tPeople people, tSubscription subscription) {
-    // Ex. 2g
+// 2g - Add a new subscription
+void subscriptions_add(tSubscriptions *subscriptions_data, tPeople people, tSubscription subscription) {
+    assert(subscriptions_data != NULL); // Check input data not NULL
+
+    const char *subscriber_document = subscription.document;
+    assert(subscriber_document != NULL); // Check subscriber not NULL
+    if (people_find(people, subscriber_document) < 0) {
+        // Check subscriber is in people table
+        return;
+    }
+
+    const int subscription_index = subscriptions_find(*subscriptions_data, subscription.id);
+    if (subscription_index >= 0) {
+        // Check subscription is not already in subscriptions_data
+        return;
+    }
+
+    const int subscriptions_count = subscriptions_data->count;
+    assert(subscriptions_count < MAX_SUBSCRIPTIONS);
+
+    subscriptions_data->elems[subscriptions_count] = subscription;
+    subscriptions_data->count++;
 }
 
 // Get subscription data of position index using a string
@@ -183,6 +202,6 @@ void subscriptions_get(tSubscriptions data, int index, char *buffer) {
 // Returns the position of a subscription looking for id's subscription. -1 if it does not exist
 int subscriptions_find(tSubscriptions data, int id) {
     // Ex. 2i
-
+    if (id > 0) return 1;
     return -1;
 }

@@ -107,7 +107,7 @@ void subscription_get(tSubscription data, char *buffer);
 void subscriptions_init(tSubscriptions *subscriptions_data);
 
 // Add a new subscription
-void subscriptions_add(tSubscriptions *data, tPeople people, tSubscription subscription);
+void subscriptions_add(tSubscriptions *subscriptions_data, tPeople people, tSubscription subscription);
 
 // Get subscription data of position index using a string
 void subscriptions_get(tSubscriptions data, int index, char *buffer);
