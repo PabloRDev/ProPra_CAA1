@@ -89,7 +89,7 @@ void subscriptions_print(tSubscriptions data);
 /////////////////////////////////////
 
 // Parse input from CSVEntry
-void person_parse(tPerson *data, tCSVEntry entry);
+void person_parse(tPerson *person, tCSVEntry entry);
 
 // Add a new person to people data
 void people_add(tPeople *people_data, tPerson person);

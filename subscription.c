@@ -120,9 +120,22 @@ void subscriptions_print(tSubscriptions data) {
 // EX2: Implement your methods here....
 //////////////////////////////////////
 
-// Parse input from CSVEntry
-void person_parse(tPerson *data, tCSVEntry entry) {
-    // Ex. 2a
+// 2a - Parse input from CSVEntry
+void person_parse(tPerson *person, const tCSVEntry entry) {
+    assert(person != NULL);
+    assert(entry.fields != NULL);
+    assert(entry.numFields >= 10);
+
+    strcpy(person->document, entry.fields[0]);
+    strcpy(person->surname, entry.fields[1]);
+    strcpy(person->name, entry.fields[2]);
+    strcpy(person->phone, entry.fields[3]);
+    strcpy(person->email, entry.fields[4]);
+    strcpy(person->address, entry.fields[5]);
+    strcpy(person->cp, entry.fields[6]);
+    person->birthday.day = atoi(entry.fields[7]); // atoi -> convert string to int
+    person->birthday.month = atoi(entry.fields[8]);
+    person->birthday.year = atoi(entry.fields[9]);
 }
 
 // 2b - Add a new person to people data
