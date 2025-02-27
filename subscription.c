@@ -194,9 +194,10 @@ void subscriptions_add(tSubscriptions *subscriptions_data, const tPeople people,
     subscriptions_data->count++;
 }
 
-// Get subscription data of position index using a string
-void subscriptions_get(tSubscriptions data, int index, char *buffer) {
-    // Ex. 2h
+// 2h - Get subscription data of position index using a string
+void subscriptions_get(tSubscriptions subscriptions_data, const int index, char *buffer) {
+    assert(index >= 0 && index < subscriptions_data.count);
+    subscription_get(subscriptions_data.elems[index], buffer);
 }
 
 // 2i - Returns the position of a subscription looking for id's subscription. -1 if it does not exist
