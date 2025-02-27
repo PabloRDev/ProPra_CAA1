@@ -157,9 +157,18 @@ void subscription_cpy(tSubscription *destination, tSubscription source) {
     destination->numDevices = source.numDevices;
 }
 
-// Get subscription data using a string
-void subscription_get(tSubscription data, char *buffer) {
-    // Ex. 2e
+// 2e - Get subscription data using a string
+void subscription_get(tSubscription subscription, char *buffer) {
+    sprintf(buffer, "%d;%s;%s;%s;%f;%s;%d;%d",
+            // "2;33365111X;01/05/2025;30/04/2026;Standard;29.95;3\n"
+            subscription.id,
+            subscription.document,
+            subscription.startDate.day, subscription.startDate.month, subscription.startDate.year,
+            subscription.endDate.day, subscription.endDate.month, subscription.endDate.year,
+            subscription.plan,
+            subscription.price,
+            subscription.numDevices
+            );
 }
 
 // 2f - Initialize subscriptions data

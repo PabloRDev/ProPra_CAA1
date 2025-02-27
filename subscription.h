@@ -17,9 +17,9 @@ typedef struct _tDate {
 } tDate;
 
 typedef enum _tPlan {
-    FREE,
-    STANDARD,
-    PREMIUM
+    Free,
+    Standard,
+    Premium
 } tPlan;
 
 typedef struct _tPerson {
@@ -101,7 +101,7 @@ void subscription_parse(tSubscription *data, tCSVEntry entry);
 void subscription_cpy(tSubscription *destination, tSubscription source);
 
 // Get subscription data using a string
-void subscription_get(tSubscription data, char *buffer);
+void subscription_get(tSubscription subscription, char *buffer);
 
 // Initialize subscriptions data
 void subscriptions_init(tSubscriptions *subscriptions_data);
