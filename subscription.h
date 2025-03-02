@@ -121,6 +121,7 @@ tPlan plan_parse(const char *plan_string);
 // Returns a plan string from a tPlan
 char *plan_to_string(tPlan plan);
 
+float round_price(float price, char *formatted_price);
 ////////////////////////////////////////////
 
 #endif

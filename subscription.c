@@ -182,47 +182,19 @@ void subscription_cpy(tSubscription *destination, tSubscription source) {
 
 // 2e - Get subscription data using a string
 void subscription_get(tSubscription subscription, char *buffer) {
-    // Redondeamos el precio a dos decimales
-    float roundedPrice = (int)(subscription.price * 100 + 0.5) / 100.0;
+    char formatted_price[20];
+    round_price(subscription.price, formatted_price);
 
-    // Comprobamos si el precio es un número entero
-    if ((int)roundedPrice == roundedPrice) {
-        // Si es un número entero, mostramos sin decimales
-        sprintf(buffer, "%d;%s;%02d/%02d/%04d;%02d/%02d/%04d;%s;%.0f;%d",
-                subscription.id,
-                subscription.document,
-                subscription.startDate.day, subscription.startDate.month, subscription.startDate.year,
-                subscription.endDate.day, subscription.endDate.month, subscription.endDate.year,
-                plan_to_string(subscription.plan),
-                roundedPrice,  // Sin decimales
-                subscription.numDevices
-        );
-    } else if ((int)(roundedPrice * 10) == roundedPrice * 10) {
-        // Si tiene un solo decimal, mostramos con 1 decimal
-        sprintf(buffer, "%d;%s;%02d/%02d/%04d;%02d/%02d/%04d;%s;%.1f;%d",
-                subscription.id,
-                subscription.document,
-                subscription.startDate.day, subscription.startDate.month, subscription.startDate.year,
-                subscription.endDate.day, subscription.endDate.month, subscription.endDate.year,
-                plan_to_string(subscription.plan),
-                roundedPrice,  // Con 1 decimal
-                subscription.numDevices
-        );
-    } else {
-        // Si tiene más de un decimal, mostramos con 2 decimales
-        sprintf(buffer, "%d;%s;%02d/%02d/%04d;%02d/%02d/%04d;%s;%.2f;%d",
-                subscription.id,
-                subscription.document,
-                subscription.startDate.day, subscription.startDate.month, subscription.startDate.year,
-                subscription.endDate.day, subscription.endDate.month, subscription.endDate.year,
-                plan_to_string(subscription.plan),
-                roundedPrice,  // Con 2 decimales
-                subscription.numDevices
-        );
-    }
+    sprintf(buffer, "%d;%s;%02d/%02d/%04d;%02d/%02d/%04d;%s;%s;%d",
+            subscription.id,
+            subscription.document,
+            subscription.startDate.day, subscription.startDate.month, subscription.startDate.year,
+            subscription.endDate.day, subscription.endDate.month, subscription.endDate.year,
+            plan_to_string(subscription.plan),
+            formatted_price,
+            subscription.numDevices
+    );
 }
-
-
 
 // 2f - Initialize subscriptions data
 void subscriptions_init(tSubscriptions *subscriptions_data) {
@@ -299,3 +271,20 @@ char* plan_to_string(const tPlan plan) {
 
     return "";
 }
+
+float round_price(const float price, char *formatted_price) {
+    float roundedPrice = (int)(price * 100 + 0.5) / 100.0;
+    // int
+    if ((int)roundedPrice == roundedPrice) {
+        sprintf(formatted_price, "%.0f", roundedPrice);
+    // 1f
+    } else if ((int)(roundedPrice * 10) == roundedPrice * 10) {
+        sprintf(formatted_price, "%.1f", roundedPrice);
+    // 2f
+    } else {
+        sprintf(formatted_price, "%.2f", roundedPrice);
+    }
+
+    return roundedPrice;
+}
+
