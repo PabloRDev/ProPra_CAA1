@@ -115,7 +115,12 @@ void subscriptions_get(tSubscriptions subscriptions_data, int index, char *buffe
 // Returns the position of a subscription looking for id's subscription. -1 if it does not exist
 int subscriptions_find(tSubscriptions subscriptions_data, int id);
 
+// Parse string to tPlan
 tPlan plan_parse(const char *plan_string);
+
+// Returns a plan string from a tPlan
+char *plan_to_string(tPlan plan);
+
 ////////////////////////////////////////////
 
 #endif

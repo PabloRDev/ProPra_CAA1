@@ -124,7 +124,7 @@ void subscriptions_print(tSubscriptions data) {
 void person_parse(tPerson *person, const tCSVEntry entry) {
     assert(person != NULL);
     assert(entry.fields != NULL);
-    assert(entry.numFields >= 10);
+    assert(entry.numFields >= 8);
 
     // 33365111X;Marie;Curie;+33123456789;marie.curie@example.com;Radium street, 88;54321;07/10/1867
     strcpy(person->document, entry.fields[0]);
@@ -134,9 +134,7 @@ void person_parse(tPerson *person, const tCSVEntry entry) {
     strcpy(person->email, entry.fields[4]);
     strcpy(person->address, entry.fields[5]);
     strcpy(person->cp, entry.fields[6]);
-    person->birthday.day = atoi(entry.fields[7]); // atoi -> convert string to int
-    person->birthday.month = atoi(entry.fields[8]);
-    person->birthday.year = atoi(entry.fields[9]);
+    sscanf(entry.fields[7], "%d/%d/%d", &person->birthday.day, &person->birthday.month, &person->birthday.year);
 }
 
 // 2b - Add a new person to people data
@@ -159,20 +157,16 @@ void people_add(tPeople *people_data, const tPerson person) {
 void subscription_parse(tSubscription *subscription, const tCSVEntry entry) {
     assert(subscription != NULL);
     assert(entry.fields != NULL);
-    assert(entry.numFields >= 11);
+    assert(entry.numFields >= 7);
 
     // 2;33365111X;01/05/2025;30/04/2026;Standard;29.95;3
     subscription->id = atoi(entry.fields[0]);
     strcpy(subscription->document, entry.fields[1]);
-    subscription->startDate.day = atoi(entry.fields[2]); // atoi -> convert string to int
-    subscription->startDate.month = atoi(entry.fields[3]);
-    subscription->startDate.year = atoi(entry.fields[4]);
-    subscription->endDate.day = atoi(entry.fields[5]);
-    subscription->endDate.month = atoi(entry.fields[6]);
-    subscription->endDate.year = atoi(entry.fields[7]);
-    subscription->plan = plan_parse(entry.fields[8]);
-    subscription->price = atof(entry.fields[9]); // atof -> convert string to float
-    subscription->numDevices = atoi(entry.fields[10]);
+    sscanf(entry.fields[2], "%d/%d/%d", &subscription->startDate.day, &subscription->startDate.month, &subscription->startDate.year);
+    sscanf(entry.fields[3], "%d/%d/%d", &subscription->endDate.day, &subscription->endDate.month, &subscription->endDate.year);
+    subscription->plan = plan_parse(entry.fields[4]);
+    subscription->price = atof(entry.fields[5]); // atof -> convert string to float
+    subscription->numDevices = atoi(entry.fields[6]);
 }
 
 // 2d - Copy the data from the source to destination (individual data)
@@ -188,13 +182,13 @@ void subscription_cpy(tSubscription *destination, tSubscription source) {
 
 // 2e - Get subscription data using a string
 void subscription_get(tSubscription subscription, char *buffer) {
-    sprintf(buffer, "%d;%s;%s;%s;%f;%s;%d;%d",
+    sprintf(buffer, "%d;%s;%02d/%02d/%04d;%02d/%02d/%04d;%s;%.2f;%d",
             // "2;33365111X;01/05/2025;30/04/2026;Standard;29.95;3\n"
             subscription.id,
             subscription.document,
             subscription.startDate.day, subscription.startDate.month, subscription.startDate.year,
             subscription.endDate.day, subscription.endDate.month, subscription.endDate.year,
-            subscription.plan,
+            plan_to_string(subscription.plan),
             subscription.price,
             subscription.numDevices
             );
@@ -264,4 +258,14 @@ tPlan plan_parse(const char* plan_string) {
 
     fprintf(stderr, "Error: Unknown plan '%s'\n", plan_string);
     exit(EXIT_FAILURE);  // Stop execution if the value is invalid
+}
+
+char* plan_to_string(const tPlan plan) {
+    switch (plan) {
+        case Free: return "Free";
+        case Standard: return "Standard";
+        case Premium: return "Premium";
+    }
+
+    return "";
 }
