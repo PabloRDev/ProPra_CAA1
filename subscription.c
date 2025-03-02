@@ -126,6 +126,7 @@ void person_parse(tPerson *person, const tCSVEntry entry) {
     assert(entry.fields != NULL);
     assert(entry.numFields >= 10);
 
+    // 33365111X;Marie;Curie;+33123456789;marie.curie@example.com;Radium street, 88;54321;07/10/1867
     strcpy(person->document, entry.fields[0]);
     strcpy(person->surname, entry.fields[1]);
     strcpy(person->name, entry.fields[2]);
@@ -154,9 +155,24 @@ void people_add(tPeople *people_data, const tPerson person) {
     people_data->count++;
 }
 
-// Parse input from CSVEntry
-void subscription_parse(tSubscription *data, tCSVEntry entry) {
-    // Ex. 2c
+// 2c - Parse input from CSVEntry
+void subscription_parse(tSubscription *subscription, const tCSVEntry entry) {
+    assert(subscription != NULL);
+    assert(entry.fields != NULL);
+    assert(entry.numFields >= 11);
+
+    // 2;33365111X;01/05/2025;30/04/2026;Standard;29.95;3
+    subscription->id = atoi(entry.fields[0]);
+    strcpy(subscription->document, entry.fields[1]);
+    subscription->startDate.day = atoi(entry.fields[2]); // atoi -> convert string to int
+    subscription->startDate.month = atoi(entry.fields[3]);
+    subscription->startDate.year = atoi(entry.fields[4]);
+    subscription->endDate.day = atoi(entry.fields[5]);
+    subscription->endDate.month = atoi(entry.fields[6]);
+    subscription->endDate.year = atoi(entry.fields[7]);
+    strcpy(subscription->plan, entry.fields[8]);
+    subscription->price = atof(entry.fields[9]); // atof -> convert string to float
+    subscription->numDevices = atoi(entry.fields[10]);
 }
 
 // 2d - Copy the data from the source to destination (individual data)

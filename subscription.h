@@ -95,7 +95,7 @@ void person_parse(tPerson *person, tCSVEntry entry);
 void people_add(tPeople *people_data, tPerson person);
 
 // Parse input from CSVEntry
-void subscription_parse(tSubscription *data, tCSVEntry entry);
+void subscription_parse(tSubscription *subscription, tCSVEntry entry);
 
 // Copy the data from the source to destination (individual data)
 void subscription_cpy(tSubscription *destination, tSubscription source);
