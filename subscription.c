@@ -60,8 +60,8 @@ void person_get(tPerson data, char *buffer) {
     // Print all data at same time
     sprintf(buffer, "%s;%s;%s;%s;%s;%s;%s;%02d/%02d/%04d",
             data.document,
-            data.name,
             data.surname,
+            data.name,
             data.phone,
             data.email,
             data.address,
