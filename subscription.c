@@ -170,7 +170,7 @@ void subscription_parse(tSubscription *subscription, const tCSVEntry entry) {
     subscription->endDate.day = atoi(entry.fields[5]);
     subscription->endDate.month = atoi(entry.fields[6]);
     subscription->endDate.year = atoi(entry.fields[7]);
-    strcpy(subscription->plan, entry.fields[8]);
+    subscription->plan = plan_parse(entry.fields[8]);
     subscription->price = atof(entry.fields[9]); // atof -> convert string to float
     subscription->numDevices = atoi(entry.fields[10]);
 }
@@ -249,4 +249,19 @@ int subscriptions_find(const tSubscriptions subscriptions_data, const int id) {
     }
 
     return -1;
+}
+
+tPlan plan_parse(const char* plan_string) {
+    if (strcmp(plan_string, "Free") == 0) {
+        return Free;
+    }
+    if (strcmp(plan_string, "Standard") == 0) {
+        return Standard;
+    }
+    if (strcmp(plan_string, "Premium") == 0) {
+        return Premium;
+    }
+
+    fprintf(stderr, "Error: Unknown plan '%s'\n", plan_string);
+    exit(EXIT_FAILURE);  // Stop execution if the value is invalid
 }
